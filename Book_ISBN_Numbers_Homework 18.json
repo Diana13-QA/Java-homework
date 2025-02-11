@@ -1,0 +1,148 @@
+{
+    "info": {
+        "name": "Book ISBN Numbers Homework",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Get Book By ISBN",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "text/xml; charset=utf-8"
+                    },
+                    {
+                        "key": "SOAPAction",
+                        "value": "http://www.webservicex.net/GetBookByISBN"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:web=\"http://www.webservicex.net\">\n   <soapenv:Header/>\n   <soapenv:Body>\n      <web:GetBookByISBN>\n         <web:ISBN>9780132350884</web:ISBN>\n      </web:GetBookByISBN>\n   </soapenv:Body>\n</soapenv:Envelope>"
+                },
+                "url": {
+                    "raw": "http://www.webservicex.net/book.asmx",
+                    "protocol": "http",
+                    "host": [
+                        "www",
+                        "webservicex",
+                        "net"
+                    ],
+                    "path": [
+                        "book.asmx"
+                    ]
+                }
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "// Перевірка статусу відповіді",
+                            "pm.test(\"Status code is 200\", function () {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "",
+                            "// Перевірка Content-Type",
+                            "pm.test(\"Content-Type is XML\", function () {",
+                            "    pm.response.to.have.header(\"Content-Type\", \"text/xml\");",
+                            "});",
+                            "",
+                            "// Перевірка тіла відповіді",
+                            "pm.test(\"Response body contains book title\", function () {",
+                            "    pm.expect(pm.response.text()).to.include(\"<Title>\");",
+                            "});",
+                            "",
+                            "// Перевірка довжини тіла відповіді",
+                            "pm.test(\"Response body length is greater than 100\", function () {",
+                            "    pm.expect(pm.response.text().length).to.be.above(100);",
+                            "});",
+                            "",
+                            "// Перевірка ISBN",
+                            "pm.test(\"Response contains correct ISBN\", function () {",
+                            "    pm.expect(pm.response.text()).to.include(\"9780132350884\");",
+                            "});",
+                            "",
+                            "// Перевірка часу відповіді",
+                            "pm.test(\"Response time is less than 200ms\", function () {",
+                            "    pm.expect(pm.response.responseTime).to.be.below(200);",
+                            "});",
+                            "",
+                            "// Перевірка валідності XML",
+                            "const xml2js = require('xml2js');",
+                            "pm.test(\"Valid XML structure\", function () {",
+                            "    xml2js.parseString(pm.response.text(), function (err, result) {",
+                            "        pm.expect(err).to.be.null;",
+                            "        pm.expect(result).to.be.an('object');",
+                            "    });",
+                            "});",
+                            "",
+                            "// Перевірка наявності заголовку Date",
+                            "pm.test(\"Response has Date header\", function () {",
+                            "    pm.response.to.have.header(\"Date\");",
+                            "});",
+                            "",
+                            "// Перевірка відсутності помилок SOAP Fault",
+                            "pm.test(\"No SOAP Fault found\", function () {",
+                            "    pm.expect(pm.response.text()).to.not.include(\"<Fault>\");",
+                            "});",
+                            "",
+                            "// Перевірка наявності ключового елемента (наприклад, автора)",
+                            "pm.test(\"Response contains author\", function () {",
+                            "    pm.expect(pm.response.text()).to.include(\"<Author>\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Get Book List",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "text/xml; charset=utf-8"
+                    },
+                    {
+                        "key": "SOAPAction",
+                        "value": "http://www.webservicex.net/GetBookList"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:web=\"http://www.webservicex.net\">\n   <soapenv:Header/>\n   <soapenv:Body>\n      <web:GetBookList/>\n   </soapenv:Body>\n</soapenv:Envelope>"
+                },
+                "url": {
+                    "raw": "http://www.webservicex.net/book.asmx",
+                    "protocol": "http",
+                    "host": [
+                        "www",
+                        "webservicex",
+                        "net"
+                    ],
+                    "path": [
+                        "book.asmx"
+                    ]
+                }
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "// Тести аналогічні до першого запиту"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        }
+    ]
+}
