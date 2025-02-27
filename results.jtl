@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testResults version="1.2">
+  <httpSample t="120" lt="100" ts="1694646968000" s="true" lb="GET /api/resource" rc="200" rm="OK" tn="Thread Group 1-1" dt="text" by="512"/>
+  <httpSample t="250" lt="200" ts="1694646968100" s="true" lb="GET /api/resource" rc="200" rm="OK" tn="Thread Group 1-2" dt="text" by="1024"/>
+  <httpSample t="500" lt="400" ts="1694646968200" s="false" lb="GET /api/resource" rc="500" rm="Internal Server Error" tn="Thread Group 1-3" dt="text" by="0"/>
+</testResults>
